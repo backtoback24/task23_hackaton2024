@@ -1,0 +1,11 @@
+Flask==2.0.1
+Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.36
+opencv-python
+Pillow
+numpy
+mediapipe
+ultralytics
+Werkzeug==2.0.3
+
+
