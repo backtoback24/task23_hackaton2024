@@ -1,4 +1,4 @@
-# __init__.py
+# __init.py
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -18,8 +18,7 @@ def create_app(config_class=Config):
     app.register_blueprint(main)  # Регистрируем Blueprint в приложении Flask
 
     with app.app_context():
-        from . import routes, models  # Импортируем routes и models для инициализации базы данных
-        db.create_all()  # Создаем все таблицы в базе данных
+        from .models import db as models_db  # Импортируем экземпляр базы данных из модуля models
+        models_db.create_all()  # Создаем все таблицы в базе данных
 
     return app
-

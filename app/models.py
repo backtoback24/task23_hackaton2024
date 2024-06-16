@@ -1,10 +1,17 @@
-from . import db
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, Integer, String
+
+db = SQLAlchemy()
 
 
-class MediaFile(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
-    video_file_path = db.Column(db.String(255), nullable=False)
+class VideoFile(db.Model):
+    id = Column(Integer, primary_key=True)
+    title = Column(String(80), nullable=False)
+    video_file_path = Column(String(200), nullable=False)
 
-    def __repr__(self):
-        return f'<MediaFile {self.title}>'
+
+class ImageFile(db.Model):
+    id = Column(Integer, primary_key=True)
+    title = Column(String(80), nullable=False)
+    image_file_path = Column(String(200), nullable=False)
+

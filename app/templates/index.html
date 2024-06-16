@@ -2,40 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Список видеозаписей</title>
+    <title>Главная страница</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
           crossorigin="anonymous">
 </head>
 <body>
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="text-center">Список видеозаписей</h2>
-                <form action="{{ url_for('main.upload_video') }}" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="videoFile" class="form-label">Выберите видео</label>
-                        <input type="file" class="form-control" id="videoFile" name="video_file" accept="video/*">
-                    </div>
-                    <div class="mb-3">
-                        <label for="videoTitle" class="form-label">Название видео</label>
-                        <input type="text" class="form-control" id="videoTitle" name="title" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Загрузить видео</button>
-                </form>
-                <ul class="list-group mt-3">
-                    {% for media_file in media_files %}
-                        <li class="list-group-item">
-                            {{ media_file.title }}
-                            <a href="{{ url_for('main.play_video', video_id=media_file.id) }}" class="btn btn-sm btn-primary ms-2">Смотреть</a>
-                            <form action="{{ url_for('main.delete_video', video_id=media_file.id) }}" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-danger ms-2">Удалить</button>
-                            </form>
-                        </li>
-                    {% endfor %}
-                </ul>
+        <h2 class="text-center">Загруженные файлы</h2>
+        <h3>Видео файлы</h3>
+        <ul>
+            {% for video in video_files %}
+                <li>
+                    {{ video.title }} -
+                    <a href="{{ url_for('main.play_video', video_id=video.id) }}">Просмотреть</a> -
+                    <a href="{{ url_for('main.download_video', video_id=video.id) }}">Скачать</a> -
+                    <form action="{{ url_for('main.delete_video', video_id=video.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <h3>Изображения</h3>
+        <a href="{{ url_for('main.download_images') }}" class="btn btn-primary mb-3">Скачать все txt файлы</a>
+        <ul>
+            {% for image in image_files %}
+                <li>
+                    {{ image.title }} -
+                    <a href="{{ url_for('main.download_image_txt', image_id=image.id) }}">Скачать txt</a> -
+                    <form action="{{ url_for('main.delete_image', image_id=image.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h2 class="text-center mt-5">Загрузка видео</h2>
+        <form action="{{ url_for('main.upload_video') }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="videoFile" class="form-label">Выберите видео</label>
+                <input type="file" class="form-control" id="videoFile" name="video_file" accept="video/*" required>
             </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Загрузить видео</button>
+        </form>
+
+        <h2 class="text-center mt-5">Загрузка изображений</h2>
+        <form action="{{ url_for('main.upload_images') }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="imageFiles" class="form-label">Выберите изображения</label>
+                <input type="file" class="form-control" id="imageFiles" name="image_files" multiple accept="image/*" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Загрузить изображения</button>
+        </form>
     </div>
 </body>
 </html>
